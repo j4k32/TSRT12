@@ -91,10 +91,11 @@
 					%\textbf{Sökväg} & \texttt{\fullpath} \\
 				\end{tabular}
 			\end{large}
-			\vfill
 			%\large{\textbf{Handledare}}\\
 			\mbox{\large{\graders}}
 		\end{center}
+		I denna rapport har en regulator tagits fram för ett system med dubbla vattentankar vars stegsvar skulle uppfylla vissa kriterium. Vattentankarna var seriekopplade på höjden på sådant sätt att utflödet på den övre tanken var inflödet på den undre. Inflödet för den övre tanken styrdes av en pump. Innan regulatorn kunde tas fram behövdes överföringsfunktionens stigtid och konstant för det öppna systemet fås fram. Regulaton togs sedan fram genom mätningar 
+	\vfill
 	\end{titlepage}
 
 
@@ -123,15 +124,24 @@
 	\setlength{\parskip}{10pt}
 
 	% lägger in rubrik (finns \section, men då får man mycket spillutrymme)
-	\Section{Problemspecifikation}
-		% \emph innebär emphasize, d.v.s. betona eller framhåll -> kursiv stil
-		\emph{I detta avsnitt beskrivs laborationen, dels som en sammanfattning
-			över dess syfte, men även en koppling till orginalspecifikationen
-			tas upp.}
-
-		% lägg in en underrubrik (\subsection -> spillutrymme)
-		\Subsection{Problemsammanfattning}
-
+	\Section{Inledning}
+			För att få erfarenhet av att ta fram en modellbaserad regulator, fick vi i uppdrrag att experimenteriellt ta fram en regulator för ett system med dubbla vattentankar. Till vår hjälp fick vi ett tanksystem i form av två seriekopplade tankar, en pump, styr- och märkort, samt ett spänningsaggregat. Vi fick också programmen \texttt{LeadLag} och \texttt{Simulation} som användes för att styra respektive simulera dubbeltanken och regulatorn. För att lösa problemet skickade vi som insignal in ett enhetssteg i systemanordningen och avläste stigtiden, överslänget och det stationära felet ur stegsvaret. Regulatorn skulle uppfylla följande krav:
+	\begin{itemize}
+		\item Stigtid T_{r} \leq 5 sekunder,
+		\item Översläng M \leq 10 \%,	
+		\item Stationärt fel e_{0} \leq 5 \%. 
+	\end{itemize}
+\\\\Resterande rapport kommer att ta upp en mer grundläggande beskrivning utav våra upptäckter i laborationen i form av experimentuppställning, utförande, felanalys, diskussion och slutsats.
+			% lägg in en underrubrik (\subsection -> spillutrymme)
+		\section{Experimentuppställning}
+			Till expeimentet användes:
+			\begin{itemize}
+			\item Vattentanksystem bestående av två stycken vattentanker, em pump och två vattennivåsensorer.		
+			\item Programmet \texttt{LeadLag}
+			\item Programmet \texttt{Simulation}
+			\item Boken \textsl{Re3glerteknik grundläggande teori} av Torkel Glad och Lennart Ljung
+			\end{itemize}
+		
 		\Subsection{Orginalspecifikation}
 			Specifikationen i sin helhet finns ...
 

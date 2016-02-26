@@ -1,234 +1,152 @@
 %______________________________________________________
 %
-%   LaTeX-mall för nybörjare
-%
-%   Konstruerad av Marcus Bergner, bergner@cs.umu.se
-%
 %   Vid funderingar titta längst ned i denna fil,
 %   eller skicka ett mail
 %______________________________________________________
 %
 
-% lite inställningar
-\documentclass[10pt, titlepage, oneside, a4paper]{article}
-\usepackage[swedish]{babel}
-\usepackage[T1]{fontenc}
-\usepackage[utf8]{inputenc}
-\usepackage{amssymb, graphicx, fancyheadings}
-\addtolength{\textheight}{20mm}
-\addtolength{\voffset}{-5mm}
-\renewcommand{\sectionmark}[1]{\markleft{#1}}
+\input{tsrt12-lab2-titelpage.tex}
 
-% \Section ger mindre spillutrymme, använd dem om du vill
-\newcommand{\Section}[1]{\section{#1}\vspace{-8pt}}
-\newcommand{\Subsection}[1]{\vspace{-4pt}\subsection{#1}\vspace{-8pt}}
-\newcommand{\Subsubsection}[1]{\vspace{-4pt}\subsubsection{#1}\vspace{-8pt}}
-	
-% appendices, \appitem och \appsubitem är för bilagor
-\newcounter{appendixpage}
-
-\newenvironment{appendices}{
-	\setcounter{appendixpage}{\arabic{page}}
-	\stepcounter{appendixpage}
-}{
-}
-
-\newcommand{\appitem}[2]{
-	\stepcounter{section}
-	\addtocontents{toc}{\protect\contentsline{section}{\numberline{\Alph{section}}#1}{\arabic{appendixpage}}}
-	\addtocounter{appendixpage}{#2}
-}
-
-\newcommand{\appsubitem}[2]{
-	\stepcounter{subsection}
-	\addtocontents{toc}{\protect\contentsline{subsection}{\numberline{\Alph{section}.\arabic{subsection}}#1}{\arabic{appendixpage}}}
-	\addtocounter{appendixpage}{#2}
-}
-
-% Ändra de rader som behöver ändras
-\def\inst{Systemvetenskap}
-\def\typeofdoc{Laborationsrapport}
-\def\course{Reglerteknik}
-\def\pretitle{Laboration 2}
-\def\title{Modellbaserad reglering av dubbeltankar}
-\def\name{Peter Arvidsson, Sara Svensson}
-%\def\username{c00abc}
-%\def\email{\username{}@cs.umu.se}
-\def\email{petarXXX@student.liu.se, sasv839@student.liu.se}
-%\def\path{edu/KURS/lab1}
-%\def\graders{ALLA HANDLEDARNAS NAMN}
-
-
-% om du vill referera till katalogen där dina filer ligger kan du 
-% använda \fullpath som kommer att vara "~username/edu..." o.s.v.
-%\def\fullpath{\raisebox{1pt}{$\scriptstyle \sim$}\username/\path}
-
-
-% Här börjar själva dokumentet
 \begin{document}
 
-	% skapar framsidan (om den inte duger: gör helt enkelt en egen)
-	\begin{titlepage}
-		\thispagestyle{empty}
-		\begin{large}
-			\begin{tabular}{@{}p{\textwidth}@{}}
-				\textbf{Linköpings universitet \hfill \today} \\
-				\textbf{Institutionen för \inst} \\
-				\textbf{\typeofdoc} \\
-			\end{tabular}
-		\end{large}
-		\vspace{10mm}
-		\begin{center}
-			\LARGE{\pretitle} \\
-			\huge{\textbf{\course}}\\
-			\vspace{10mm}
-			\LARGE{\title} \\
-			\vspace{15mm}
-			\begin{large}
-				\begin{tabular}{ll}
-					\textbf{Namn} & \name \\
-					\textbf{E-mail} & \texttt{\email} \\
-					%\textbf{Sökväg} & \texttt{\fullpath} \\
-				\end{tabular}
-			\end{large}
-			%\large{\textbf{Handledare}}\\
-			\mbox{\large{\graders}}
-		\end{center}
-		I denna rapport har en regulator tagits fram för ett system med dubbla vattentankar vars stegsvar skulle uppfylla vissa kriterium. Vattentankarna var seriekopplade på höjden på sådant sätt att utflödet på den övre tanken var inflödet på den undre. Inflödet för den övre tanken styrdes av en pump. Innan regulatorn kunde tas fram behövdes överföringsfunktionens stigtid och konstant för det öppna systemet fås fram. Regulaton togs sedan fram genom mätningar 
-	\vfill
-	\end{titlepage}
+% Innehåll ------------------------------
+\newpage
+\thispagestyle{empty}
+\tableofcontents
+\newpage
 
 
-	% fixar sidfot
-	\lfoot{\footnotesize{\name, \email}}
-	\rfoot{\footnotesize{\today}}
-	\lhead{\sc\footnotesize\title}
-	\rhead{\nouppercase{\sc\footnotesize\leftmark}}
-	\pagestyle{fancy}
-	\renewcommand{\headrulewidth}{0.2pt}
-	\renewcommand{\footrulewidth}{0.2pt}
 
-	% skapar innehållsförteckning.
-	% Tänk på att köra latex 2ggr för att uppdatera allt
-	\pagenumbering{roman}
-	\tableofcontents
-	
-	% och lägger in en sidbrytning
-	\newpage
+\listoffigures
+~\\
 
-	\pagenumbering{arabic}
+\listoftables
+\newpage
 
-	% i Sverige har vi normalt inget indrag vid nytt stycke
-	\setlength{\parindent}{0pt}
-	% men däremot lite mellanrum
-	\setlength{\parskip}{10pt}
 
-	% lägger in rubrik (finns \section, men då får man mycket spillutrymme)
-	\Section{Inledning}
-			För att få erfarenhet av att ta fram en modellbaserad regulator, fick vi i uppdrrag att experimenteriellt ta fram en regulator för ett system med dubbla vattentankar. Till vår hjälp fick vi ett tanksystem i form av två seriekopplade tankar, en pump, styr- och märkort, samt ett spänningsaggregat. Vi fick också programmen \texttt{LeadLag} och \texttt{Simulation} som användes för att styra respektive simulera dubbeltanken och regulatorn. För att lösa problemet skickade vi som insignal in ett enhetssteg i systemanordningen och avläste stigtiden, överslänget och det stationära felet ur stegsvaret. Regulatorn skulle uppfylla följande krav:
+%header ---------------------------------
+\pagestyle{fancy}
+
+\fancyhead{} % clear all header fields
+\fancyhead[L]{TSRT12\slshape}
+\fancyhead[R]{\today \slshape}
+
+\fancyfoot{} % clear all footer fields
+\fancyfoot[L,R]{\thepage}
+\fancyfoot[L]{Modellbaserad reglering av dubbeltankar}
+
+%slut på header ---------------------------------
+
+
+\section{Inledning}
+För att få erfarenhet av att ta fram en modellbaserad regulator, fick vi i uppdrrag att experimenteriellt ta fram en regulator för ett system med dubbla vattentankar. Till vår hjälp fick vi ett tanksystem i form av två seriekopplade tankar, en pump, styr- och märkort, samt ett spänningsaggregat. Vi fick också programmen \texttt{LeadLag} och \texttt{Simulation} som användes för att styra respektive simulera dubbeltanken och regulatorn. För att lösa problemet skickade vi som insignal in ett enhetssteg i systemanordningen och avläste stigtiden, överslänget och det stationära felet ur stegsvaret. Regulatorn skulle uppfylla följande krav:
 	\begin{itemize}
 		\item Stigtid T_{r} \leq 5 sekunder,
 		\item Översläng M \leq 10 \%,	
 		\item Stationärt fel e_{0} \leq 5 \%. 
 	\end{itemize}
 \\\\Resterande rapport kommer att ta upp en mer grundläggande beskrivning utav våra upptäckter i laborationen i form av experimentuppställning, utförande, felanalys, diskussion och slutsats.
-			% lägg in en underrubrik (\subsection -> spillutrymme)
-		\section{Experimentuppställning}
-			Till expeimentet användes:
-			\begin{itemize}
+
+
+% -------------- Experimentuppställning-----------------
+
+
+\section{Experimentuppställning}
+Till expeimentet användes:
+		\begin{itemize}
 			\item Vattentanksystem bestående av två stycken vattentanker, em pump och två vattennivåsensorer.		
 			\item Programmet \texttt{LeadLag}
 			\item Programmet \texttt{Simulation}
 			\item Boken \textsl{Re3glerteknik grundläggande teori} av Torkel Glad och Lennart Ljung
-			\end{itemize}
-		
-		\Subsection{Orginalspecifikation}
-			Specifikationen i sin helhet finns ...
+		\end{itemize}
 
-			% nytt stycke skapas när du har en, eller flera, tomma rader
-			någonstans i föregående stycke
 
-	\Section{Åtkomst och användarhandledning}
-		\emph{I detta avsnitt beskrivs de filer, med tillhörande sökvägar,
-			som ingår i lösningen, samt korta beskrivningar om syftet med
-			varje fil. Dessutom beskrivs hur man ska handskas med den
-			implementerade lösningen till problemet, i form av instruktioner
-			för hur körning och kompilering av lösningen sker.}
-	
-		\Subsection{Filer som ingår i lösningen}
-			I katalogen \texttt{\fullpath} ...
-			
-		\Subsection{Kompilering och körning}
-			
 
-	\Section{Systembeskrivning}
-		\emph{I detta avsnitt beskrivs systemet i sin helhet mer i detalj.
-			Datastrukturer och annan intern representation som är central
-			för uppgiftens lösning behandlas. Dessutom beskrivs de olika
-			komponenternas relationer till varandra.}
+% ------------- utförande -----------------------
 
-		%Dessa rubriker behöver inte finnas med, men något i denna stil
-		%bör det kanske vara
-		\Subsection{Systemöversikt}
 
-		\Subsection{Exekveringsflöde}
-			
-		\Subsection{Övriga systemdetaljer}
+\section{Utförande}
 
-	\Section{Algoritmbeskrivning}
-		\emph{I detta avsnitt beskrivs de algoritmer som anses som
-			icke-triviala i uppgiften.}
-		
-		\Subsection{Algoritm 1}
-			
-		\Subsection{Algoritm 2}	
-	
-	\Section{Lösningens begränsningar}
-		\emph{I detta avsnitt beskrivs alla begränsningar som lösningen av
-			uppgiften innehåller. Detta innefattar även funna begränsningar
-			som strider mot specifikationen.}
-		
-		SKRIV TEXT HÄR...
 
-	\Section{Problem och reflektioner}
-		\emph{Här presenteras egna tankar kring uppgiften som sådan samt de
-			problem som uppstått under arbetets gång.}
-		
-		OCH HÄR..
+\begin{equation}
+G\textsubscript{dubbel}(s) = \frac{K_{enkel1}}{sT+1} \cdot \frac{K_{enkel2}}{sT+1} = \frac{K\textsubscript{dubbel}}{(sT+1)^2}
+\end{equation}
 
-	\Section{Testkörningar}
-		\emph{I detta avsnitt visas ett antal tester som utförts med programmet.
-			Samtliga tester är kommenterade.}
-		
-		GLÖM INTE ATT KOMMENTERA TESTER!
-		
-		\begin{footnotesize}
-			\begin{verbatim}
-				Utdata kan lämpligtvis återges så här, men tänk på att
-				        kommentera dina tester. Lägg märke till att rad-
-				brytningarna och mellanslagen bevaras!
-			\end{verbatim}
-		\end{footnotesize}
-		
+\\
 
-	% här börjar alla bilagor. Denna måste finnas med även om bara
-	% bilagor anges i \begin{appendices} ... \end{appendices}
-	\appendix
+\begin{equation}
+\delta_{h1}(s) = \frac{C * K_{enkel1}}{sT+1}\frac{1}{s}
+\end{equation}
+\\
+\begin{equation}
+\delta_{u}(t) = C{\cdot}K_{enkel}(1-e^{(-\frac{t}{T})}) = 0,63K_{enkel}C 
+\end{equation}
 
-	\Section{Bilaga 1}
-	\ldots{}ligger direkt i dokumentet
 
-	% bilagor, t.ex. källkod. En tom extrasida kommer att skrivas ut för
-	% att få alla sidnummer att stämma
-	\begin{appendices}
-		\appitem{Källkod}{0}
-		\appsubitem{\texttt{minfil.c}}{2}
-		\appsubitem{\texttt{minfil.h}}{1}
-		\appitem{En bilaga på 3 sidor}{3}
-	\end{appendices}
+\begin{equation}
+T = \frac{-t}{ln{0,37}} \approx t
+\end{equation}
+
+\\
+
+
+\begin{equation}
+\delta_{h2}(s) = \frac{K_{dubbel}}{(1+s)^2}*\frac{C}{s}
+\end{equation}
+
+\begin{equation}
+\lim\limits_{t \to \infty}y(t) = \lim\limits_{s \to 0}sY(s)
+\end{equation}
+\\
+
+\begin{equation}
+K_{dubbel} = \frac{\delta_{h2}(s)}{C}
+\end{equation}
+\\
+
+
+\begin{equation}
+T_{i} = \frac{10}{\omega_{c,d}}
+\end{equation}
+\\
+
+
+% ------------- Felanalys -----------------------
+
+
+\section{Felanalys}
+
+
+% ------------- Resultat--------------
+
+\section{Resultat}
+
+%--------figur-----------------------
+
+%\begin{figure}[ht!]
+%\centering
+%\includegraphics[width=90mm]{}
+%\caption{}
+%\label{}
+%\end{figure}
+
+
+% --------------- Slutsats -------------------------
+
+%\newpage
+%\section{Slutsats}
+
+
+% ------------ Källor -------------------------
+
+\section{Källor}
+\label{boken}
+Glad, Torkel och Ljung, Lennart. 2006. \textit{Reglerteknik - Grundläggande teori}. Upplaga 4:10. Lund. Studentlitteratur AB.
+\newpage
+
+
 
 \end{document}
-
 
 % Lite information om hur man arbetar med LaTeX
 %-----------------------------------------------

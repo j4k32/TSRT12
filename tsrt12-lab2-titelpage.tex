@@ -1,0 +1,74 @@
+\documentclass[a4wide]{article}
+\usepackage{fixltx2e}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{sidecap}
+\usepackage{fancyhdr}
+\usepackage[margin=1.5in]{geometry}
+\usepackage{amssymb,amsmath}
+\usepackage[euler]{textgreek}
+\usepackage[swedish]{babel}
+
+\setlength{\headheight}{21pt}
+
+
+% Ändra de rader som behöver ändras
+\def\inst{Systemvetenskap}
+\def\typeofdoc{Laborationsrapport}
+\def\course{Reglerteknik}
+\def\pretitle{Laboration 2}
+\def\title{Modellbaserad reglering av dubbeltankar}
+\def\name{Peter Arvidsson, Sara Svensson}
+%\def\username{c00abc}
+%\def\email{\username{}@cs.umu.se}
+\def\email{petarXXX@student.liu.se, sasv839@student.liu.se}
+%\def\path{edu/KURS/lab1}
+%\def\graders{ALLA HANDLEDARNAS NAMN}
+
+% Här börjar själva dokumentet
+\begin{document}
+
+	% skapar framsidan (om den inte duger: gör helt enkelt en egen)
+	\begin{titlepage}
+		\thispagestyle{empty}
+		\begin{large}
+			\begin{tabular}{@{}p{\textwidth}@{}}
+				\textbf{Linköpings universitet \hfill \today} \\
+				\textbf{Institutionen för \inst} \\
+				\textbf{\typeofdoc} \\
+			\end{tabular}
+		\end{large}
+		\vspace{10mm}
+		\begin{center}
+		~\\
+		~\\
+		~\\
+		~\\
+		~\\
+		~\\
+			\LARGE{\pretitle} \\
+			\huge{\textbf{\title}}\\
+			\vspace{10mm}
+			\LARGE{\course} \\
+			\vspace{15mm}
+			\begin{large}
+				\begin{tabular}{ll}
+					\textbf{Namn} & \name \\
+					\textbf{E-mail} & \texttt{\email} \\
+					%\textbf{Sökväg} & \texttt{\fullpath} \\
+				\end{tabular}
+			\end{large}
+			%\large{\textbf{Handledare}}\\
+			\mbox{\large{\graders}}
+		\end{center}
+		~\\
+		~\\
+		~\\
+		~\\
+		~\\
+		I denna rapport har en regulator tagits fram för ett system med dubbla vattentankar vars stegsvar skulle uppfylla vissa kriterium. Vattentankarna var seriekopplade på höjden på sådant sätt att utflödet på den övre tanken var inflödet på den undre. Inflödet för den övre tanken styrdes av en pump. 
+		 Innan regulatorn kunde tas fram behövdes överföringsfunktionens stigtid och konstant för det öppna systemet undersökas. Detta gjordes genom mätningar på övre och undre tankens stegsvar var för sig. Regulatorn togs sedan fram på liknande vis, men där överslänget, stigtiden eller det stationära felet minskades ifall de gav för stora värden på hela systemets stegsvar. 
+	%\vfill
+	\end{titlepage}
+	
+\end{document}

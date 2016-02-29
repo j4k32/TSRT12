@@ -4,7 +4,6 @@
 %   eller skicka ett mail
 %______________________________________________________
 %
-
 \input{tsrt12-lab2-titelpage.tex}
 
 \begin{document}
@@ -39,13 +38,17 @@
 
 
 \section{Inledning}
-För att få erfarenhet av att ta fram en modellbaserad regulator, fick vi i uppdrrag att experimenteriellt ta fram en regulator för ett system med dubbla vattentankar. Till vår hjälp fick vi ett tanksystem i form av två seriekopplade tankar, en pump, styr- och märkort, samt ett spänningsaggregat. Vi fick också programmen \texttt{LeadLag} och \texttt{Simulation} som användes för att styra respektive simulera dubbeltanken och regulatorn. För att lösa problemet skickade vi som insignal in ett enhetssteg i systemanordningen och avläste stigtiden, överslänget och det stationära felet ur stegsvaret. Regulatorn skulle uppfylla följande krav:
+
+För att få erfarenhet av att ta fram en modellbaserad regulator, fick vi i uppdrrag att experimenteriellt ta fram en regulator för ett system med dubbla vattentankar. Till vår hjälp fick vi ett tanksystem i form av två seriekopplade tankar, en pump, styr- och märkort, samt ett spänningsaggregat. Vi fick också programmen \texttt{LeadLag} och \texttt{Simulation} som användes för att styra respektive simulera dubbeltanken och regulatorn. För att lösa problemet skickade vi som insignal in ett enhetssteg i systemanordningen och avläste stigtiden, överslänget och det stationära felet ur stegsvaret. Regulatorn skulle uppfylla följande krav:	
+~\\
 	\begin{itemize}
-		\item Stigtid T_{r} \leq 5 sekunder,
-		\item Översläng M \leq 10 \%,	
-		\item Stationärt fel e_{0} \leq 5 \%. 
+		\item Översläng M,
+		\item Stigtid, T\textsubscript{r} mindre eller lika med 5 sekunder 
+		\item Stationärt fel, e\textsubscript{0} mindre eller lika med 
 	\end{itemize}
-\\\\Resterande rapport kommer att ta upp en mer grundläggande beskrivning utav våra upptäckter i laborationen i form av experimentuppställning, utförande, felanalys, diskussion och slutsats.
+
+~\\
+Resterande rapport kommer att ta upp en mer grundläggande beskrivning utav våra upptäckter i laborationen i form av experimentuppställning, utförande, felanalys, diskussion och slutsats.
 
 
 % -------------- Experimentuppställning-----------------
@@ -54,10 +57,16 @@ För att få erfarenhet av att ta fram en modellbaserad regulator, fick vi i upp
 \section{Experimentuppställning}
 Till expeimentet användes:
 		\begin{itemize}
-			\item Vattentanksystem bestående av två stycken vattentanker, em pump och två vattennivåsensorer.		
+			\item Vattentanksystem
+			\begin{itemize}
+				\item Vattentankar, 2 st
+				\item Vattennivåsensorer, 2 st
+				\item Pump
+			\end{itemize}		
 			\item Programmet \texttt{LeadLag}
 			\item Programmet \texttt{Simulation}
-			\item Boken \textsl{Re3glerteknik grundläggande teori} av Torkel Glad och Lennart Ljung
+			%-----------------------------ha med här eller i källor?------------------------------------------
+			%\item Boken \textsl{Reglerteknik grundläggande teori} av Torkel Glad och Lennart Ljung
 		\end{itemize}
 
 
@@ -66,26 +75,57 @@ Till expeimentet användes:
 
 
 \section{Utförande}
-
-
+För ett enkelt vattentanksystem kan den öppna överföringsfunktionen skrivas som
 \begin{equation}
-G\textsubscript{dubbel}(s) = \frac{K_{enkel1}}{sT+1} \cdot \frac{K_{enkel2}}{sT+1} = \frac{K\textsubscript{dubbel}}{(sT+1)^2}
+G\textsubscript{enkel}(s) = \frac{K}{sT+1}.
 \end{equation}
+För att få fram överföringsfunktionen för ett system med två tankar, multipliceras de enskilda tankarnas överföringsfunktioner med varandra.
+\begin{equation}
+G\textsubscript{dubbel}(s) = \frac{K_{övre}}{sT+1} \cdot \frac{K_{undre}}{sT+1} = \frac{K\textsubscript{dubbel}}{(sT+1)^2}
+\end{equation}
+En regulator till ett vattensystem med dubbeltank som uppfyllde de tre kriterium som definerats i inledningen togs fram i två steg. I första steget bestämdes stigtiden, T\textsubscript{r}, och konstanten, K, för överföringsfunktionen för det öppna dubbeltanksystemet, G\textsubscript{dubbel}. För att ta fram stigtiden bestämdes utsignalen till att vara vattennivån i den övre tanken, h\textsubscript{övre}(t) och att denna skulle vara 10 cm. Som insignal valdes ett enhetssteg u(t)  för att få ett stegsvar som utsignal, där
+
+%----------------fixa
+\begin{equation}
+u(t) = C
+\end{equation}
+om
+\begin{equation}
+t \leq 0
+\end{eqwuation}
+%--------------------
+
+C är godtycklig konstant. Eftersom utsignalen defineras som överföringsfunktionen faltat med insignalen kunde utsignalen efter laplacetransformering istället skrivas med multiplikation mellan överföringsfunktion och insignal.
+\begin{equation}
+\delta_{h1}(s) = \frac{C * K_{övre}}{sT+1}\frac{1}{s}
+\end{equation}
+\\
+ Där laplacetransformen för enhetssteget är 
+ \begin{equation}
+ \frac{C}{s}
+ \end{equation}
+ %--------ändra
+och där {deltah1} står för avvikelsen från 10 cm på den övre tanken. Med en invers laplacetransformering tillbaka i tidsdomänen gavs ett uttryck för
+  %----------------
+stegsvaret.
+ \begin{equation}
+\delta_{u}(t) = C{\cdot}{K_{övre}}(1-e^{-\frac{t}{T}}) 
+\end{equation}
+Eftersom \texttt{e} enligt uttrycket avtog med --t/T och eftersom T söktes, sattes tiden t till T.
+ \begin{equation}
+\delta_{u}(t) = C{\cdot}{K_{övre}}(1-e^{-\frac{T}{T}}) =C{\cdot}{K_{övre}}(1-e^{-1}) = 0,63{K_{övre}}C 
+\end{equation}
+Eftersom stegsvaret går mot K\textsubscript{övre}*C då tiden går mot oändligheten, gavs enligt uttrycket ovan att T kunde utläsas vid 63\% av stegsvarets slutvärde. I \texttt{LeadLag} visades stegsvaret för h\textsubscript{ö}(t) och ur detta kunde T\textsubscript{r} avläsas. 
+
 
 \\
 
-\begin{equation}
-\delta_{h1}(s) = \frac{C * K_{enkel1}}{sT+1}\frac{1}{s}
-\end{equation}
-\\
-\begin{equation}
-\delta_{u}(t) = C{\cdot}K_{enkel}(1-e^{(-\frac{t}{T})}) = 0,63K_{enkel}C 
-\end{equation}
 
 
-\begin{equation}
-T = \frac{-t}{ln{0,37}} \approx t
-\end{equation}
+
+%\begin{equation}
+%T = \frac{-t}{ln{0,37}} \approx t
+%\end{equation}
 
 \\
 
